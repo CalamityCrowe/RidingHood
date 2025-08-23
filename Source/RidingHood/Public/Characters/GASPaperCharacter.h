@@ -9,6 +9,11 @@
 #include "AbilityIDDefine.h"
 #include "GASPaperCharacter.generated.h"
 
+
+class UGameplayEffect;
+class UGASGameplayAbility;
+class UGASAbilitySystemComponent;
+class UAttributeSetBase;
 /**
  * 
  */
@@ -17,10 +22,10 @@ class RIDINGHOOD_API UCharacterConfig : public UDataAsset
 {
 	GENERATED_BODY()
 public: 
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS")
-	//TArray<TSubclassOf<UGASGameplayAbility>> DefaultAbilities;
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS")
-	//TArray<TSubclassOf<UGameplayEffect>> DefaultAttributes;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS")
+	TArray<TSubclassOf<UGASGameplayAbility>> DefaultAbilities;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS")
+	TArray<TSubclassOf<UGameplayEffect>> DefaultAttributes;
 };
 
 UCLASS()
@@ -56,8 +61,10 @@ protected:
 
 	virtual void BeginPlay() override;
 
-	//TWeakObjectPtr<UGASAbilitySystemComponent> ASC;
-	//TWeakObjectPtr<UAttributeSetBase> AttributeSetBase;
+	TWeakObjectPtr<UGASAbilitySystemComponent> ASC;
+	TWeakObjectPtr<UAttributeSetBase> AttributeSetBase;
+
+	FGameplayTag DeadTag;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Config")
 	TObjectPtr<UCharacterConfig> CharacterConfig;
@@ -69,4 +76,5 @@ protected:
 
 	virtual void SetHealth(float NewHealth);
 
+	virtual void SetMana(float NewMana);
 };

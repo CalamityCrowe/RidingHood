@@ -11,7 +11,8 @@
 			"AdditionalDependencies": [
 				"Paper2D",
 				"GameplayAbilities",
-				"Engine"
+				"Engine",
+				"UMG"
 			]
 		}
 	],
