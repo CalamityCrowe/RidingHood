@@ -124,12 +124,14 @@ void AGASPaperCharacter::BeginPlay()
 void AGASPaperCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+
 	if (GetVelocity().X > 0)
 	{
-		GetSprite()->SetRelativeRotation(FRotator(0, 0, 0));
-		GetSprite()->SetRelativeLocation(FVector(10, 0, -5)); 
+		GetSprite()->SetRelativeRotation(FRotator(0, 0, 0)); 
+		GetSprite()->SetRelativeLocation(FVector(10, 0, -5));
 	}
-	else if (GetVelocity().X < 0)
+	if (GetVelocity().X < 0)
 	{
 		GetSprite()->SetRelativeRotation(FRotator(0, 180, 0));
 		GetSprite()->SetRelativeLocation(FVector(-10, 0, -5));
