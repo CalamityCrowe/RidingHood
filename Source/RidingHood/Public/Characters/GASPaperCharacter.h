@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PaperCharacter.h"
+#include "PaperZDCharacter.h"
 #include "AbilitySystemInterface.h"
 #include "GameplayTagContainer.h"
 #include "AbilityIDDefine.h"
@@ -29,7 +29,7 @@ public:
 };
 
 UCLASS()
-class RIDINGHOOD_API AGASPaperCharacter : public APaperCharacter, public IAbilitySystemInterface
+class RIDINGHOOD_API AGASPaperCharacter : public APaperZDCharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 public: 
@@ -50,6 +50,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
 	float GetMaxHealth() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetMana() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetMaxMana() const;
 
 
 	virtual void Die();
@@ -68,6 +72,8 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Config")
 	TObjectPtr<UCharacterConfig> CharacterConfig;
+
+	void Tick(float DeltaSeconds) override;
 
 
 	virtual void AddCharacterAbilities();

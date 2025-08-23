@@ -6,6 +6,7 @@
 #include "Characters/Abilities/Attributes/AttributeSetBase.h"
 #include "Characters/Abilities/GASGameplayAbility.h"
 #include "Components/CapsuleComponent.h"
+#include "PaperFlipbookComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 AGASPaperCharacter::AGASPaperCharacter()
@@ -17,6 +18,8 @@ AGASPaperCharacter::AGASPaperCharacter()
 	bAlwaysRelevant = true;
 
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
+
+	GetCharacterMovement()->bUseFlatBaseForFloorChecks = true;
 }
 
 UAbilitySystemComponent* AGASPaperCharacter::GetAbilitySystemComponent() const
@@ -57,7 +60,7 @@ void AGASPaperCharacter::RemoveCharacterAbilities()
 
 float AGASPaperCharacter::GetHealth() const
 {
-	if (AttributeSetBase.Get()) 
+	if (AttributeSetBase.Get())
 	{
 		return AttributeSetBase->GetHealth();
 	}
@@ -69,6 +72,24 @@ float AGASPaperCharacter::GetMaxHealth() const
 	if (AttributeSetBase.Get())
 	{
 		return AttributeSetBase->GetMaxHealth();
+	}
+	return 0.0f;
+}
+
+float AGASPaperCharacter::GetMana() const
+{
+	if (AttributeSetBase.Get())
+	{
+		return AttributeSetBase->GetMana();
+	}
+	return 0.0f;
+}
+
+float AGASPaperCharacter::GetMaxMana() const
+{
+	if (AttributeSetBase.Get())
+	{
+		return AttributeSetBase->GetMaxMana();
 	}
 	return 0.0f;
 }
@@ -98,6 +119,21 @@ void AGASPaperCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+}
+
+void AGASPaperCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if (GetVelocity().X > 0)
+	{
+		GetSprite()->SetRelativeRotation(FRotator(0, 0, 0));
+		GetSprite()->SetRelativeLocation(FVector(10, 0, -5)); 
+	}
+	else if (GetVelocity().X < 0)
+	{
+		GetSprite()->SetRelativeRotation(FRotator(0, 180, 0));
+		GetSprite()->SetRelativeLocation(FVector(-10, 0, -5));
+	}
 }
 
 void AGASPaperCharacter::AddCharacterAbilities()

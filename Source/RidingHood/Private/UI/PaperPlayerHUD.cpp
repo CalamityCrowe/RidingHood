@@ -22,7 +22,7 @@ void UPaperPlayerHUD::NativeConstruct()
 		if(AttributeChangeTask)
 		{
 			AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateHealth);
-			//AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateMana);
+			AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateMana);
 
 		}
 		
@@ -46,6 +46,9 @@ void UPaperPlayerHUD::InitializeHUDWidget(const UAttributeSetBase* Attributes)
 	HealthBar->SetMaxValue(MaxHealth);
 	HealthBar->UpdateBar(Health);
 
+	ManaBar->SetMaxValue(Attributes->GetMaxMana());
+	ManaBar->UpdateBar(Attributes->GetMana());
+
 	// TODO: Initialize Mana Bar similarly
 }
 
@@ -56,4 +59,13 @@ void UPaperPlayerHUD::UpdateHealth(FGameplayAttribute Attribute, float NewValue,
 		return;
 	}
 	HealthBar->UpdateBar(NewValue);
+}
+
+void UPaperPlayerHUD::UpdateMana(FGameplayAttribute Attribute, float NewValue, float MaxValue)
+{
+	if (Attribute != UAttributeSetBase::GetManaAttribute())
+	{
+		return;
+	}
+	ManaBar->UpdateBar(NewValue);
 }

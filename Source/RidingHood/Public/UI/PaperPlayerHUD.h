@@ -25,6 +25,8 @@ public:
 
 	UFUNCTION()
 	void UpdateHealth(FGameplayAttribute Attribute, float NewValue, float MaxValue);
+	UFUNCTION()
+	void UpdateMana(FGameplayAttribute Attribute, float NewValue, float MaxValue);
 
 protected: 
 
