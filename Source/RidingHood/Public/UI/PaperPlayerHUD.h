@@ -8,6 +8,8 @@ class UTextBlock;
 class UPaperProgressBar;
 class UAttributeSetBase;
 class UAsyncTaskAttributeChange;
+class UActionDisplayWidget;
+
 
 UCLASS()
 class RIDINGHOOD_API UPaperPlayerHUD : public UUserWidget
@@ -35,6 +37,15 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UPaperProgressBar* ManaBar;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UActionDisplayWidget* AttackDisplay;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UActionDisplayWidget* MagicDisplay;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UActionDisplayWidget* ItemDisplay;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UActionDisplayWidget* JumpDisplay;
 
 private: 
 	UPROPERTY()
