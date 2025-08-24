@@ -115,8 +115,3 @@ void APaperPlayerCharacter::Magic(const FInputActionValue& Value)
 {
 	SendAbilityLocalInput(Value, static_cast<int32>(EGASAbilityInputID::Ability2));
 }
-
-void APaperPlayerCharacter::Attack(const FInputActionValue& Value)
-{
-	SendAbilityLocalInput(Value, static_cast<int32>(EGASAbilityInputID::Ability1));
-}

@@ -22,7 +22,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack State")
 	float CurrentRadius = 100.0f; // Radius of the attack state sphere trace
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack State")
-	float Offset = 50.0f; // Offset from the character's location to start the sphere trace
 };

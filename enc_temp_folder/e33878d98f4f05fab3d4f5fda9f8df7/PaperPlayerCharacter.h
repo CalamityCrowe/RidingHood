@@ -25,11 +25,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
+	TObjectPtr<UInputAction> LookAction;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
 	TObjectPtr<UInputAction> JumpAction;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
-	TObjectPtr<UInputAction> AttackAction;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
-	TObjectPtr<UInputAction> MagicAction;
+
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputMappingContext;
@@ -73,7 +72,4 @@ private:
 
 	UFUNCTION()
 	void Magic(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void Attack(const FInputActionValue& Value);
 };

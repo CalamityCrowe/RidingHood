@@ -5,7 +5,6 @@
 #include "PaperZDAnimInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Characters/GASPaperCharacter.h"
-#include "PaperFlipbookComponent.h"
 
 
 UANS_AttackStateZD::UANS_AttackStateZD()
@@ -22,13 +21,12 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 	{
 		return;
 	}
-	AActor* OwnerActor = OwningInstance->GetOwningActor();
-	if (OwnerActor == nullptr)
+	AActor* OwnerCharacter = OwningInstance->GetOwningActor();
+	if (OwnerCharacter == nullptr)
 	{
 		return;
 	}
-	AGASPaperCharacter* OwnerCharacter = Cast<AGASPaperCharacter>(OwnerActor);
-	FVector Start = OwnerCharacter->GetActorLocation() + OwnerCharacter->GetSprite()->GetForwardVector() * Offset;
+	FVector Start = OwnerCharacter->GetActorLocation();
 
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
 	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_Pawn));

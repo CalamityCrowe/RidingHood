@@ -8,8 +8,6 @@
 #include "Components/CapsuleComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "PaperZDAnimationComponent.h"
-
 
 AGASPaperCharacter::AGASPaperCharacter()
 {
@@ -127,7 +125,6 @@ void AGASPaperCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	
 
 	if (GetVelocity().X > 0)
 	{
