@@ -53,6 +53,7 @@ void APaperPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	{
 		EIC->BindAction(PlayerInputData->MoveAction, ETriggerEvent::Triggered, this, &APaperPlayerCharacter::Move);
 		EIC->BindAction(PlayerInputData->JumpAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::Jump);
+		EIC->BindAction(PlayerInputData->AttackAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::Attack);
 	}
 }
 
@@ -119,4 +120,13 @@ void APaperPlayerCharacter::Magic(const FInputActionValue& Value)
 void APaperPlayerCharacter::Attack(const FInputActionValue& Value)
 {
 	SendAbilityLocalInput(Value, static_cast<int32>(EGASAbilityInputID::Ability1));
+}
+
+void APaperPlayerCharacter::Jump()
+{
+	if (ASC->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Attack")))) 
+	{
+		return; // Prevent jumping while attacking
+	}
+	Super::Jump();
 }

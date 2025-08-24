@@ -12,6 +12,8 @@ UGA_Move::UGA_Move()
 	// Set the ability input ID and ability ID
 	AbilityInputID = EGASAbilityInputID::Move;
 	AbilityID = EGASAbilityInputID::Move;
+
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Attack")));
 }
 
 void UGA_Move::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)

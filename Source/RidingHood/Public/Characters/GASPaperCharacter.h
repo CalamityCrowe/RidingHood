@@ -61,6 +61,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GAS|GASCharacter")
 	virtual void FinishDying();
 
+	UFUNCTION(BlueprintPure)
+	bool IsAttacking() const { return bIsAttacking; }
+
+	void SetIsAttacking(bool bNewIsAttacking) { bIsAttacking = bNewIsAttacking; }
+
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -69,6 +75,8 @@ protected:
 	TWeakObjectPtr<UAttributeSetBase> AttributeSetBase;
 
 	FGameplayTag DeadTag;
+
+	bool bIsAttacking = false;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Config")
 	TObjectPtr<UCharacterConfig> CharacterConfig;

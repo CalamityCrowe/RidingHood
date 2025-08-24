@@ -76,4 +76,6 @@ private:
 
 	UFUNCTION()
 	void Attack(const FInputActionValue& Value);
+	
+	virtual void Jump() override;
 };
