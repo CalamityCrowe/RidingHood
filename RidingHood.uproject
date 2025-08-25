@@ -13,7 +13,8 @@
 				"GameplayAbilities",
 				"Engine",
 				"UMG",
-				"PaperZD"
+				"PaperZD",
+				"AIModule"
 			]
 		}
 	],

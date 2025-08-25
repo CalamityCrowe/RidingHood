@@ -45,7 +45,7 @@ void APaperPlayerController::RemoveHUD()
 {
 	if (HUDWidget)
 	{
-		HUDWidget->RemoveFromViewport();
+		HUDWidget->RemoveFromParent();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("HUD Removed"));
 	}
 }

@@ -8,6 +8,8 @@
 #include "GASEnemyCharacter.generated.h"
 
 class UWidgetComponent; 
+class UBehaviorTree;
+
 /**
  * 
  */
@@ -26,6 +28,9 @@ public:
 
 	virtual void FinishDying() override;
 
+	UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
+
+
 private: 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
@@ -39,4 +44,7 @@ private:
 	FDelegateHandle OnHealthChangedDelegateHandle;
 
 	virtual void OnHealthChanged(const FOnAttributeChangeData& Data);
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Blackboard", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UBehaviorTree> BehaviorTree;
 };
