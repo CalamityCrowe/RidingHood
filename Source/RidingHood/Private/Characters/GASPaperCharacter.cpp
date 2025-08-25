@@ -22,6 +22,7 @@ AGASPaperCharacter::AGASPaperCharacter()
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
 
 	GetCharacterMovement()->bUseFlatBaseForFloorChecks = true;
+	GetSprite()->CastShadow = true;
 }
 
 UAbilitySystemComponent* AGASPaperCharacter::GetAbilitySystemComponent() const
@@ -131,13 +132,13 @@ void AGASPaperCharacter::Tick(float DeltaSeconds)
 
 	if (GetVelocity().X > 0)
 	{
-		GetSprite()->SetRelativeRotation(FRotator(0, 0, 0)); 
-		GetSprite()->SetRelativeLocation(FVector(10, 0, -5));
+		GetSprite()->SetRelativeRotation(CharacterConfig->FaceRightRotation); 
+		GetSprite()->SetRelativeLocation(CharacterConfig->FaceRightOffset);
 	}
 	if (GetVelocity().X < 0)
 	{
-		GetSprite()->SetRelativeRotation(FRotator(0, 180, 0));
-		GetSprite()->SetRelativeLocation(FVector(-10, 0, -5));
+		GetSprite()->SetRelativeRotation(CharacterConfig->FaceLeftRotation);
+		GetSprite()->SetRelativeLocation(CharacterConfig->FaceLeftOffset);
 	}
 }
 

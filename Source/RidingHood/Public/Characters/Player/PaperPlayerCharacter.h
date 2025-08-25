@@ -58,6 +58,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player|Inputs")
 	TObjectPtr<UPlayerInputData> PlayerInputData;
 
+	
+
 	virtual void BeginPlay() override;
 
 	virtual void PostInitializeComponents() override;

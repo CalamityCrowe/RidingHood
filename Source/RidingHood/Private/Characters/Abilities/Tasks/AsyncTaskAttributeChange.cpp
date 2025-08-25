@@ -48,7 +48,6 @@ void UAsyncTaskAttributeChange::EndTask()
 			ASC->GetGameplayAttributeValueChangeDelegate(Attribute).RemoveAll(this);
 		}
 	}
-	MarkAsGarbage();
 	SetReadyToDestroy();
 }
 

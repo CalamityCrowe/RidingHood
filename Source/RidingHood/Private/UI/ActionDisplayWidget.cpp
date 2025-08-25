@@ -23,8 +23,25 @@ void UActionDisplayWidget::NativeDestruct()
 
 void UActionDisplayWidget::SetActionName(FText NewAction)
 {
-	if (ActionName) 
+	if (ActionName)
 	{
 		ActionName->SetText(NewAction);
 	}
+}
+
+void UActionDisplayWidget::ButtonPressed(bool Pressed)
+{
+	
+	if (Pressed)
+	{
+		PlayAnimationForward(PressedAnim); 
+		ActionIcon->SetBrushFromTexture(PressedImage,false); // Example of visual feedback
+	}
+	else
+	{
+		PlayAnimationReverse(PressedAnim);
+		ActionIcon->SetBrushFromTexture(UnPressedImage, false); // Example of visual feedback
+	}
+
+	// Additional logic for button press can be added here
 }

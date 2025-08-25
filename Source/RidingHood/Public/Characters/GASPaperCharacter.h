@@ -26,6 +26,17 @@ public:
 	TArray<TSubclassOf<UGASGameplayAbility>> DefaultAbilities;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS")
 	TArray<TSubclassOf<UGameplayEffect>> DefaultAttributes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sprite")
+	FVector FaceRightOffset = FVector(0.f, 0.f, 0.f);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sprite")
+	FVector FaceLeftOffset = FVector(0.f, 0.f, 0.f);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sprite")
+	FRotator FaceRightRotation = FRotator(0.f, 0.f, 0.f);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sprite")
+	FRotator FaceLeftRotation = FRotator(0.f, 180.f, 0.f);
+	
+
 };
 
 UCLASS()
@@ -80,6 +91,8 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Config")
 	TObjectPtr<UCharacterConfig> CharacterConfig;
+
+
 
 	void Tick(float DeltaSeconds) override;
 

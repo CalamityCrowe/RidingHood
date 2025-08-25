@@ -96,11 +96,6 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				WasAlive = TargetCharacter->IsAlive();
 			}
 
-			if (!TargetCharacter->IsAlive())
-			{
-
-			}
-
 			const float NewHealth = GetHealth() - LocalDamage;
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
 

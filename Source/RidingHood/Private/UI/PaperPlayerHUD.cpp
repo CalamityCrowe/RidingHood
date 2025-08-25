@@ -23,7 +23,6 @@ void UPaperPlayerHUD::NativeConstruct()
 		{
 			AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateHealth);
 			AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateMana);
-
 		}
 		
 	}

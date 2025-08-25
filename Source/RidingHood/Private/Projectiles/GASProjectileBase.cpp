@@ -21,8 +21,6 @@ AGASProjectileBase::AGASProjectileBase()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 
-
-
 	Collider->SetSphereRadius(15.0f);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AGASProjectileBase::OnOverlapBegin);
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);

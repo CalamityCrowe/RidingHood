@@ -24,6 +24,9 @@ public:
 
 	virtual void SetActionName(FText);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void ButtonPressed(bool Pressed);
+
 protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UImage* ActionIcon;
@@ -31,4 +34,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UTextBlock* ActionName;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UTexture2D* UnPressedImage; 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UTexture2D* PressedImage;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	UWidgetAnimation* PressedAnim;
 };
