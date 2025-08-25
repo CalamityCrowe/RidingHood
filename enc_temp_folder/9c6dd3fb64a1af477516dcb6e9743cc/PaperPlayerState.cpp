@@ -4,7 +4,6 @@
 #include "Player/PaperPlayerState.h"
 #include "Characters/Abilities/GASAbilitySystemComponent.h"
 #include "Characters/Abilities/Attributes/AttributeSetBase.h"
-#include "Characters/Player/PaperPlayerCharacter.h"
 
 APaperPlayerState::APaperPlayerState()
 {
@@ -52,10 +51,7 @@ void APaperPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 	float NewHealth = Data.NewValue;
 	if (!IsAlive() && !ASC->HasMatchingGameplayTag(DeadTag)) 
 	{
-		if (APaperPlayerCharacter* Player = Cast<APaperPlayerCharacter>(GetPawn())) 
-		{
-			Player->Die();
-		}
+	
 	}
 }
 void APaperPlayerState::MaxHealthChanged(const FOnAttributeChangeData& Data)

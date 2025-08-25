@@ -41,15 +41,6 @@ void APaperPlayerController::CreateHUD()
 	HUDWidget->InitializeHUDWidget(PS->GetAttributeSetBase());
 }
 
-void APaperPlayerController::RemoveHUD()
-{
-	if (HUDWidget)
-	{
-		HUDWidget->RemoveFromViewport();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("HUD Removed"));
-	}
-}
-
 void APaperPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);

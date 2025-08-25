@@ -50,9 +50,6 @@ public:
 	FVector2D GetMovementAxis() const { return MoveAxis; }
 
 	UCameraComponent* GetCamera() const { return Camera; }
-
-	virtual void Die() override;
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player|Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;

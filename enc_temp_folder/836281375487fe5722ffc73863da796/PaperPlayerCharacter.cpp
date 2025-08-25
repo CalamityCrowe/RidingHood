@@ -80,16 +80,6 @@ void APaperPlayerCharacter::PossessedBy(AController* NewController)
 	}
 }
 
-void APaperPlayerCharacter::Die()
-{
-	Super::Die();
-	if (APaperPlayerController* PC = Cast<APaperPlayerController>(GetController()))
-	{
-		PC->RemoveHUD();
-	}
-
-}
-
 void APaperPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay(); 

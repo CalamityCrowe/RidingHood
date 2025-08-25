@@ -19,7 +19,6 @@ public:
 
 	void CreateHUD();
 
-	void RemoveHUD();
 protected:
 
 	virtual void OnPossess(APawn* InPawn) override;
