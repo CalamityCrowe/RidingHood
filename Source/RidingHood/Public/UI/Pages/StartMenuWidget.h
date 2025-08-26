@@ -38,4 +38,8 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ExitGameButton;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Level")
+	TSoftObjectPtr<UWorld> LevelToLoad;
+	
 };

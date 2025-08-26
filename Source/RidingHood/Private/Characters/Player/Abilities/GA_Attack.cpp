@@ -4,6 +4,7 @@
 #include "Characters/Player/Abilities/GA_Attack.h"
 #include "Characters/GASPaperCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 UGA_Attack::UGA_Attack()
@@ -22,6 +23,12 @@ void UGA_Attack::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const 
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	if (AGASPaperCharacter* Character = Cast<AGASPaperCharacter>(ActorInfo->AvatarActor.Get())) 
 	{
+		if (Character->GetCharacterMovement()->IsFalling()) 
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+			return;
+		} // Don't allow attacking while in air (jumping
+
 		if (CommitAbility(Handle, ActorInfo, ActivationInfo))
 		{
 			UAbilitySystemComponent* ASC = ActorInfo->AbilitySystemComponent.Get();
