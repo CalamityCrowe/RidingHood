@@ -8,6 +8,7 @@ class UTextBlock;
 class UPaperProgressBar;
 class UAttributeSetBase;
 class UAsyncTaskAttributeChange;
+class UAsyncTaskCooldownChanged;
 class UActionDisplayWidget;
 
 
@@ -30,6 +31,11 @@ public:
 	UFUNCTION()
 	void UpdateMana(FGameplayAttribute Attribute, float NewValue, float MaxValue);
 
+	UFUNCTION()
+	void DisplayCooldown(FGameplayTag CooldownTag, float TimeRemaining, float Duration);
+	UFUNCTION()
+	void HideCooldown(FGameplayTag CooldownTag, float TimeRemaining, float Duration);
+
 protected: 
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
@@ -46,8 +52,15 @@ protected:
 	UActionDisplayWidget* ItemDisplay;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UActionDisplayWidget* JumpDisplay;
-
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UTextBlock* CooldownText;
 private: 
 	UPROPERTY()
 	TObjectPtr<UAsyncTaskAttributeChange> AttributeChangeTask;
+	UPROPERTY()
+	TObjectPtr<UAsyncTaskCooldownChanged> CooldownChangeTask;
+
+	FTimerHandle CooldownTimerHandle;
+	float CooldownTimeRemaining;
+	void UpdateCooldownTimer();
 };

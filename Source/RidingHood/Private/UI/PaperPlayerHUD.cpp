@@ -3,7 +3,10 @@
 #include "UI/PaperProgressBar.h"
 #include "Characters/Abilities/Attributes/AttributeSetBase.h"
 #include "Characters/Abilities/Tasks/AsyncTaskAttributeChange.h"
+#include "Characters/Abilities/Tasks/AsyncTaskCooldownChanged.h"
 #include "Player/PaperPlayerState.h"
+#include "Kismet/KismetMathLibrary.h"
+
 
 UPaperPlayerHUD::UPaperPlayerHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -24,7 +27,17 @@ void UPaperPlayerHUD::NativeConstruct()
 			AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateHealth);
 			AttributeChangeTask->OnAttributeChanged.AddDynamic(this, &UPaperPlayerHUD::UpdateMana);
 		}
-		
+
+		FGameplayTagContainer CooldownTags;
+		CooldownTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Item")));
+
+		CooldownChangeTask = UAsyncTaskCooldownChanged::ListenForCooldownChange(PS->GetAbilitySystemComponent(),CooldownTags, false);
+		if (CooldownChangeTask)
+		{
+			// You can bind to cooldown start/end events here if needed
+			CooldownChangeTask->OnCooldownBegin.AddDynamic(this, &UPaperPlayerHUD::DisplayCooldown);
+			CooldownChangeTask->OnCooldownEnd.AddDynamic(this, &UPaperPlayerHUD::HideCooldown);
+		}
 	}
 }
 
@@ -33,6 +46,10 @@ void UPaperPlayerHUD::NativeDestruct()
 	if (IsValid(AttributeChangeTask)) 
 	{
 		AttributeChangeTask->EndTask();
+	}
+	if (IsValid(CooldownChangeTask))
+	{
+		CooldownChangeTask->EndTask();
 	}
 	Super::NativeDestruct();	
 }
@@ -67,4 +84,37 @@ void UPaperPlayerHUD::UpdateMana(FGameplayAttribute Attribute, float NewValue, f
 		return;
 	}
 	ManaBar->UpdateBar(NewValue);
+}
+
+void UPaperPlayerHUD::DisplayCooldown(FGameplayTag CooldownTag, float TimeRemaining, float Duration)
+{
+
+	CooldownTimeRemaining = TimeRemaining;
+	int32 Seconds = UKismetMathLibrary::Round(TimeRemaining);
+	FText CooldownTextValue = FText::FromString(FString::Printf(TEXT("%d"),Seconds ));
+	CooldownText->SetText(CooldownTextValue);
+	CooldownText->SetVisibility(ESlateVisibility::Visible);
+	GetWorld()->GetTimerManager().SetTimer(CooldownTimerHandle, this, &UPaperPlayerHUD::UpdateCooldownTimer, 0.1f, true);
+}
+
+void UPaperPlayerHUD::HideCooldown(FGameplayTag CooldownTag, float TimeRemaining, float Duration)
+{
+	if (CooldownTag != FGameplayTag::RequestGameplayTag(FName("Ability.Cooldown")))
+	{
+		return;
+	}
+	GetWorld()->GetTimerManager().ClearTimer(CooldownTimerHandle);
+	CooldownText->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UPaperPlayerHUD::UpdateCooldownTimer()
+{
+	int32 Seconds = UKismetMathLibrary::Round(CooldownTimeRemaining);
+	FText CooldownTextValue = FText::FromString(FString::Printf(TEXT("%d"), Seconds));	CooldownText->SetText(CooldownTextValue);
+	CooldownTimeRemaining -= 0.1f;
+	if (CooldownTimeRemaining <= 0.f)
+	{
+		GetWorld()->GetTimerManager().ClearTimer(CooldownTimerHandle);
+		CooldownText->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

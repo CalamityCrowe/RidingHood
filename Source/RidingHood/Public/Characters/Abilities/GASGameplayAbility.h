@@ -8,15 +8,15 @@
 #include "GASGameplayAbility.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class RIDINGHOOD_API UGASGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-public: 
+public:
 
-	UGASGameplayAbility(); 
+	UGASGameplayAbility();
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
 	EGASAbilityInputID AbilityInputID = EGASAbilityInputID::None;
@@ -27,14 +27,19 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
 	bool bActivateAbilityOnGranted = false;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability|Cooldown")
 	FScalableFloat CooldownDuration = 0.0f;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability|Cost")
+	FScalableFloat Cost = 0.0f;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Cooldown")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability|Cooldown")
 	FGameplayTagContainer CooldownTags;
 
 	UPROPERTY(Transient)
 	FGameplayTagContainer TempCooldownTags;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability|Cost")
+	FGameplayTag CostTag;
 
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 
