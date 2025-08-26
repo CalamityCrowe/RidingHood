@@ -30,8 +30,6 @@ public:
 	TObjectPtr<UInputAction> AttackAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
 	TObjectPtr<UInputAction> MagicAction;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
-	TObjectPtr<UInputAction> ItemAction;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputMappingContext;
@@ -83,9 +81,6 @@ private:
 
 	UFUNCTION()
 	void Attack(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void Item(const FInputActionValue& Value);
 	
 	virtual void Jump() override;
 };

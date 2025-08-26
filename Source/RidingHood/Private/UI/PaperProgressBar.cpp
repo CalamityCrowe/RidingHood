@@ -8,7 +8,7 @@
 UPaperProgressBar::UPaperProgressBar(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	CurrentMaxValue = 100.f; 
+	CurrentMaxValue = 100.f;
 }
 
 void UPaperProgressBar::NativeConstruct()
@@ -23,8 +23,9 @@ void UPaperProgressBar::NativeDestruct()
 
 void UPaperProgressBar::UpdateBar(float Value)
 {
-	if(StatBar)
+	if (StatBar)
 	{
 		StatBar->SetPercent(Value / CurrentMaxValue);
 	}
 }
+

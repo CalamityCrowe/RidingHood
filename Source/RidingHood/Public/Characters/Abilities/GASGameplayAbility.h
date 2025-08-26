@@ -28,7 +28,16 @@ public:
 	bool bActivateAbilityOnGranted = false;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
-	float CooldownDuration = 0.0f;
+	FScalableFloat CooldownDuration = 0.0f;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Cooldown")
+	FGameplayTagContainer CooldownTags;
+
+	UPROPERTY(Transient)
+	FGameplayTagContainer TempCooldownTags;
 
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
+
+
+
 };
