@@ -1,0 +1,20 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameplayEffectCalculation.h"
+#include "GASDamageExecCalculation.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class RIDINGHOOD_API UGASDamageExecCalculation : public UGameplayEffectCalculation
+{
+	GENERATED_BODY()
+public: 
+	UGASDamageExecCalculation(); 
+
+	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
+};

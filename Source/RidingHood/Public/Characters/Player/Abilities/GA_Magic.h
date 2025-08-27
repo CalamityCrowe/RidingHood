@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+class AGASProjectileBase; 
+
 UCLASS()
 class RIDINGHOOD_API UGA_Magic : public UGASGameplayAbility
 {
@@ -19,4 +22,18 @@ public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 	virtual void ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const override;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	TSubclassOf<UGameplayEffect> DamageGameplayEffect; 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<AGASProjectileBase> ProjectileClass;
+
+protected: 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability|Stats")
+	FScalableFloat Damage;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability|Stats")
+	FScalableFloat Speed;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability|Stats")
+	FScalableFloat Range;
 };

@@ -55,6 +55,9 @@ public:
 
 	virtual void Die() override;
 
+	bool IsCasting() const { return bIsCasting; }
+	void SetIsCasting(bool bNewIsCasting) { bIsCasting = bNewIsCasting; }
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player|Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;
@@ -74,6 +77,8 @@ protected:
 private: 
 
 	FVector2D MoveAxis; 
+
+	bool bIsCasting; 
 
 	UFUNCTION()
 	void Move(const FInputActionValue& Value);

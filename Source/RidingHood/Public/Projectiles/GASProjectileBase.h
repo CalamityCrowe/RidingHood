@@ -11,7 +11,7 @@ class UStaticMeshComponent;
 class UProjectileMovementComponent;
 class USphereComponent;
 
-UCLASS()
+UCLASS(abstract)
 class RIDINGHOOD_API AGASProjectileBase : public AActor
 {
 	GENERATED_BODY()
