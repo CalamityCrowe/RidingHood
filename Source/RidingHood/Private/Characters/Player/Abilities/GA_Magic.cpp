@@ -15,6 +15,9 @@ UGA_Magic::UGA_Magic()
 	AbilityInputID = EGASAbilityInputID::Ability2;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Skill.Ability2")));
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Attack")));
+
+
+
 }
 
 void UGA_Magic::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
@@ -24,6 +27,7 @@ void UGA_Magic::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 		return;
 	}
+
 
 	if (GetOwningActorFromActorInfo())
 	{
@@ -35,10 +39,11 @@ void UGA_Magic::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 				EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 				return;
 			}
-			Player->SetIsCasting(true);
+			// TODO, if there is a casting animation, set this to true and the animation will reset it
+			//Player->SetIsCasting(true);
 
 			FVector Start = Player->GetSprite()->GetComponentLocation();
-			FVector Forward = Player->GetSprite()->GetRightVector();
+			FVector Forward = Player->GetSprite()->GetForwardVector();
 			FVector End = Start + Forward;
 
 			FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(DamageGameplayEffect, GetAbilityLevel(Handle, ActorInfo));
@@ -47,12 +52,14 @@ void UGA_Magic::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			SpawnParams.Instigator = Player;
 
 			if (AGASProjectileBase* Projectile = GetWorld()->SpawnActor<AGASProjectileBase>(ProjectileClass, Start, FRotator::ZeroRotator, SpawnParams))
 			{
-				Projectile->InitProjectile(Speed.GetValue(), Range.GetValue(), Forward);
 				Projectile->DamageEffect = SpecHandle;
-				Projectile->SetInstigator(Player);
+				Projectile->InitProjectile(Speed.GetValue(), Range.GetValue(), Forward);
+				EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+				return; 
 			}
 		}
 	}

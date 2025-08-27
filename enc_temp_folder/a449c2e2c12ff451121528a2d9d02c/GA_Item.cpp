@@ -24,8 +24,8 @@ void UGA_Item::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FG
 		{
 			//TODO: Use Item
 		//	Player->UseItem();
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Use Item"));
-			//ApplyCooldown(Handle, ActorInfo, ActivationInfo);
+
+			ApplyCooldown(Handle, ActorInfo, ActivationInfo);
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 		}
 	}
@@ -51,7 +51,8 @@ void UGA_Item::ApplyCooldown(const FGameplayAbilitySpecHandle Handle, const FGam
 	if (CooldownGE) 
 	{
 		FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(CooldownGE->GetClass(), GetAbilityLevel(Handle, ActorInfo));
-
+		SpecHandle.Data.Get()->DynamicGrantedTags.AppendTags(CooldownTags);
+		SpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Cooldown")), CooldownDuration.GetValueAtLevel(GetAbilityLevel()));
 		ApplyGameplayEffectSpecToOwner(Handle, ActorInfo, ActivationInfo, SpecHandle);
 	}
 }

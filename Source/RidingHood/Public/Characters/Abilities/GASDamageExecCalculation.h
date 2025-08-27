@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayEffectCalculation.h"
+#include "GameplayEffectExecutionCalculation.h"
 #include "GASDamageExecCalculation.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RIDINGHOOD_API UGASDamageExecCalculation : public UGameplayEffectCalculation
+class RIDINGHOOD_API UGASDamageExecCalculation : public UGameplayEffectExecutionCalculation
 {
 	GENERATED_BODY()
 public: 
