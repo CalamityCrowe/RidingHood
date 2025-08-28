@@ -108,14 +108,26 @@ void AGASPaperCharacter::Die()
 	if (ASC.IsValid())
 	{
 		ASC->CancelAbilities();
-
-
 	}
 }
 
 void AGASPaperCharacter::FinishDying()
 {
 	Destroy();
+}
+
+void AGASPaperCharacter::StartHitStop(float Time)
+{
+	CustomTimeDilation = 0.3; 
+	// we say what one has been hit in the debug
+
+	GetWorld()->GetTimerManager().SetTimer(HitStopTimerHandle, this, &AGASPaperCharacter::StopHitStop, Time, false);
+
+}
+void AGASPaperCharacter::StopHitStop()
+{
+	CustomTimeDilation = 1.0f;
+	GetWorld()->GetTimerManager().ClearTimer(HitStopTimerHandle);
 }
 
 void AGASPaperCharacter::BeginPlay()

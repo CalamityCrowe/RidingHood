@@ -77,6 +77,10 @@ public:
 
 	void SetIsAttacking(bool bNewIsAttacking) { bIsAttacking = bNewIsAttacking; }
 
+	UFUNCTION()
+	void StartHitStop(float Time);
+
+	void StopHitStop();
 
 protected:
 
@@ -86,6 +90,8 @@ protected:
 	TWeakObjectPtr<UAttributeSetBase> AttributeSetBase;
 
 	FGameplayTag DeadTag;
+
+	FTimerHandle HitStopTimerHandle;
 
 	bool bIsAttacking = false;
 

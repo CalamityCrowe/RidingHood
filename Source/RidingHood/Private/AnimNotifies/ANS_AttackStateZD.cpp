@@ -5,6 +5,7 @@
 #include "PaperZDAnimInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Characters/GASPaperCharacter.h"
+#include "AbilitySystemComponent.h"
 #include "PaperFlipbookComponent.h"
 
 
@@ -38,7 +39,7 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 	TArray<FHitResult> Hits;
 
 	UKismetSystemLibrary::SphereTraceMultiForObjects(this, Start, Start, CurrentRadius, ObjectTypes, false, IgnoreActors, EDrawDebugTrace::None, Hits, true);
-	DrawDebugSphere(GetWorld(), Start, CurrentRadius, 12, FColor::Red, false, -1.0f, 0, 1.0f);
+	//DrawDebugSphere(GetWorld(), Start, CurrentRadius, 12, FColor::Red, false, -1.0f, 0, 1.0f);
 	if (Hits.Num() > 0)
 	{
 		for (FHitResult Hit : Hits)
@@ -47,7 +48,23 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 			{
 				if (AGASPaperCharacter* HitCharacter = Cast<AGASPaperCharacter>(Hit.GetActor())) 
 				{
-				
+					UAbilitySystemComponent* TargetASC = HitCharacter->GetAbilitySystemComponent();
+					UAbilitySystemComponent* SourceASC = OwnerCharacter->GetAbilitySystemComponent();
+					if (TargetASC && SourceASC &&  !TargetASC->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag("State.Stun")))
+					{
+						// generate a message to show what actor hit what 
+						FGameplayEffectContextHandle EffectContext = SourceASC->MakeEffectContext();
+						EffectContext.AddSourceObject(OwnerCharacter);
+						EffectContext.AddHitResult(Hit);
+
+						FGameplayEffectSpecHandle DamageSpecHandle = SourceASC->MakeOutgoingSpec(DamageEffect, 1, EffectContext);
+						if (DamageSpecHandle.IsValid()) 
+						{
+							DamageSpecHandle.Data->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), CurrentDamage);
+							TargetASC->ApplyGameplayEffectSpecToSelf(*DamageSpecHandle.Data.Get());
+						}
+					}
+
 				}
 			}
 		}

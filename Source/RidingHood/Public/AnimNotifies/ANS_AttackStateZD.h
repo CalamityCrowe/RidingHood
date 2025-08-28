@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Notifies/PaperZDAnimNotifyState.h"
+#include "GameplayEffect.h"
 #include "ANS_AttackStateZD.generated.h"
 
 /**
@@ -25,4 +26,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack State")
 	float Offset = 50.0f; // Offset from the character's location to start the sphere trace
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack State")
+	float CurrentDamage = 20.0f; // Damage to apply on hit
+
+protected: 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attack State")
+	TSubclassOf<UGameplayEffect> DamageEffect;
 };

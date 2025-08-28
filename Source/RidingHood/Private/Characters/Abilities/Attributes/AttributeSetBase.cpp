@@ -101,7 +101,9 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 			if (TargetCharacter && WasAlive)
 			{
+				// to show what each the target actor and source actor is
 
+				TargetCharacter->StartHitStop(.05f);
 				if (SourceActor != TargetActor)
 				{
 
