@@ -5,6 +5,8 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
 #include "Characters/GASPaperCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "PaperFlipbookComponent.h"
 
 UAttributeSetBase::UAttributeSetBase()
 {
@@ -101,9 +103,10 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 			if (TargetCharacter && WasAlive)
 			{
-				// to show what each the target actor and source actor is
-
-				TargetCharacter->StartHitStop(.05f);
+				FVector HitDirection = (SourceCharacter->GetSprite()->GetForwardVector() * 100) + FVector(0,0,300);
+				TargetCharacter->LaunchCharacter(HitDirection, true, true);
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("HitDirection: %s"), *HitDirection.ToString()));
+				// to show the impact normal, we draw a debug line
 				if (SourceActor != TargetActor)
 				{
 

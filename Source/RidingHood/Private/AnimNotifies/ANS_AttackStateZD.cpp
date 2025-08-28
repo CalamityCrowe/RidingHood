@@ -42,7 +42,7 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 	//DrawDebugSphere(GetWorld(), Start, CurrentRadius, 12, FColor::Red, false, -1.0f, 0, 1.0f);
 	if (Hits.Num() > 0)
 	{
-		for (FHitResult Hit : Hits)
+		for (const FHitResult& Hit : Hits)
 		{
 			if (Hit.GetActor() && Hit.GetActor() != OwnerCharacter)
 			{
@@ -62,6 +62,7 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 						{
 							DamageSpecHandle.Data->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), CurrentDamage);
 							TargetASC->ApplyGameplayEffectSpecToSelf(*DamageSpecHandle.Data.Get());
+							HitCharacter->StartHitStop(0.1f);
 						}
 					}
 
