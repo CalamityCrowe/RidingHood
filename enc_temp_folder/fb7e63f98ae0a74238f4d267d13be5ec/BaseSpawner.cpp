@@ -34,6 +34,7 @@ void ABaseSpawner::Tick(float DeltaTime)
 }
 bool ABaseSpawner::SpawnEnemy()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Spawning Enemy")));
 	if (EnemyQueue.IsValidIndex(0))
 	{
 		FActorSpawnParameters SpawnParams;

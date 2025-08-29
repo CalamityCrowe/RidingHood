@@ -35,11 +35,14 @@ private:
 
 	TArray<TObjectPtr<ABaseSpawner>> Spawners;
 	int32 WaveNumber; 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	int32 EnemyMaxCount; 
 	int32 EnemyRemaining;
 
 	TMap<TSubclassOf<AGASEnemyCharacter>, int32> EnemyPool;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	TObjectPtr<UDataTable> WaveDataTable;
 
 	FTimerHandle TransitionTimerHandle;
 };

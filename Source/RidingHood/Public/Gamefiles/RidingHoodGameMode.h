@@ -21,7 +21,7 @@ public:
 
 	virtual void BeginPlay() override;
 
-
+private:
 	void GetSpawners();
 	void StartWave();
 	void NewWave();
@@ -30,7 +30,11 @@ public:
 	void BuildEnemyPool();
 	int32 GetPoolSize() const; 
 	TSubclassOf<AGASEnemyCharacter> GetEnemyFromPool();
-	void OnEnemyDefeated(); 
+public:
+
+	void OnEnemyDefeated();
+
+
 private:
 
 	TArray<TObjectPtr<ABaseSpawner>> Spawners;
@@ -43,6 +47,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	TObjectPtr<UDataTable> WaveDataTable;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	TArray<TSubclassOf<AGASEnemyCharacter>> EnemiesToAdd;
 
 	FTimerHandle TransitionTimerHandle;
 };

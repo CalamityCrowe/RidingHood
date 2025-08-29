@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Enemies/BaseSpawner.h"
 #include "Characters/Enemies/GASEnemyCharacter.h"
+#include "Enemies/WaveData.h"
 
 ARidingHoodGameMode::ARidingHoodGameMode()
 {
@@ -60,6 +61,24 @@ void ARidingHoodGameMode::EnterTransition(float Timer)
 
 void ARidingHoodGameMode::BuildEnemyPool()
 {
+	FName RowName = FName(*FString::FromInt(WaveNumber));
+
+	if (WaveDataTable)
+	{
+		if (FWaveDataRow* WaveData = WaveDataTable->FindRow<FWaveDataRow>(RowName, TEXT(""))) 
+		{
+			EnemyPool = WaveData->WaveModifiers.EnemyPool;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No data found for wave number: %d"), WaveNumber);
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WaveDataTable is not assigned in the GameMode"));
+	}
+
 	EnemyRemaining = GetPoolSize();
 }
 
@@ -77,8 +96,24 @@ int32 ARidingHoodGameMode::GetPoolSize() const
 
 TSubclassOf<AGASEnemyCharacter> ARidingHoodGameMode::GetEnemyFromPool()
 {
+	TArray<TSubclassOf<AGASEnemyCharacter>> Keys;
+	EnemyPool.GetKeys(Keys);
+	TSubclassOf<AGASEnemyCharacter> SelectedEnemy = Keys[FMath::RandRange(0, Keys.Num() - 1)];
+	int32* Value = EnemyPool.Find(SelectedEnemy);
+	if(Value)
+	{
+		*Value--; 
+		if (*Value > 0) 
+		{
+			EnemyPool.Add(SelectedEnemy, *Value);
+		}
+		else
+		{
+			EnemyPool.Remove(SelectedEnemy); 
+		}
+	}
 
-	return TSubclassOf<AGASEnemyCharacter>();
+	return SelectedEnemy;
 }
 
 void ARidingHoodGameMode::OnEnemyDefeated()

@@ -71,7 +71,16 @@ void ARidingHoodGameMode::BuildEnemyPool()
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("No data found for wave number: %d"), WaveNumber);
+			for (TSubclassOf<AGASEnemyCharacter> EnemyClass : EnemiesToAdd)
+			{
+				if (EnemyClass)
+				{
+					int32 RandomNumber = FMath::RandRange(10, WaveNumber * 5);
+					RandomNumber /= EnemiesToAdd.Num();
+					EnemyPool.Add(EnemyClass, RandomNumber);
+				}
+			}
+			EnemyMaxCount += FMath::RandRange(1, 5);
 		}
 	}
 	else
@@ -123,7 +132,7 @@ void ARidingHoodGameMode::OnEnemyDefeated()
 	{
 		if (EnemyRemaining <= 0) 
 		{
-			EnterTransition(5); 
+			EnterTransition(FMath::RandRange(2,5)); 
 		}
 	}
 	else
