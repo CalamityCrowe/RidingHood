@@ -63,12 +63,10 @@ void ABaseSpawner::AddEnemyToQueue(TSubclassOf<AGASEnemyCharacter> EnemyClass)
 	Collider->GetOverlappingActors(OverlappingActors,EnemyClass->StaticClass());
 	if (OverlappingActors.IsValidIndex(0)) 
 	{
-	
-	}
-	else
-	{
 		SpawnEnemy();
+
 	}
+
 }
 
 void ABaseSpawner::AttemptToSpawn()

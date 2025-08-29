@@ -105,7 +105,7 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			{
 				if (SourceCharacter && TargetCharacter->IsAlive()) 
 				{
-					FVector HitDirection = (SourceCharacter->GetSprite()->GetForwardVector() * 100) + FVector(0, 0, 300);
+					FVector HitDirection = (SourceCharacter->GetSprite()->GetForwardVector() * 100) + FVector(0, 0, 30);
 					TargetCharacter->LaunchCharacter(HitDirection, true, true);
 					TargetCharacter->SetIsHurt(true);
 				}
