@@ -141,20 +141,16 @@ void AGASPaperCharacter::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 
-	FVector Velocity = GetVelocity();
-	if (Velocity.X != 0)
+	if (bIsHurt == false)
 	{
-		bool bFacingRight = (Velocity.X > 0);
-		if (bIsHurt) 
-		{
-			bFacingRight = !bFacingRight;
-		}
-		if (bFacingRight) 
+
+
+		if (GetVelocity().X > 0)
 		{
 			GetSprite()->SetRelativeRotation(CharacterConfig->FaceRightRotation);
 			GetSprite()->SetRelativeLocation(CharacterConfig->FaceRightOffset);
 		}
-		else
+		if (GetVelocity().X < 0)
 		{
 			GetSprite()->SetRelativeRotation(CharacterConfig->FaceLeftRotation);
 			GetSprite()->SetRelativeLocation(CharacterConfig->FaceLeftOffset);

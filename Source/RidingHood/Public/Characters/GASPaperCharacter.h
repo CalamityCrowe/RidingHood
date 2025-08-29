@@ -51,6 +51,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter")
 	virtual bool IsAlive() const;
 
+	bool IsHurt() const { return bIsHurt; }
+	void SetIsHurt(bool bNewIsHurt) { bIsHurt = bNewIsHurt; }
+
+
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter")
 	virtual int32 GetAbilityLevel(EGASAbilityInputID AbilityInputID) const;
 
@@ -98,7 +102,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Config")
 	TObjectPtr<UCharacterConfig> CharacterConfig;
 
-
+	bool bIsHurt = false;
 
 	void Tick(float DeltaSeconds) override;
 

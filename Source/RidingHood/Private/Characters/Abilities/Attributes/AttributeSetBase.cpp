@@ -103,10 +103,12 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 			if (TargetCharacter && WasAlive)
 			{
-				FVector HitDirection = (SourceCharacter->GetSprite()->GetForwardVector() * 100) + FVector(0,0,300);
-				TargetCharacter->LaunchCharacter(HitDirection, true, true);
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("HitDirection: %s"), *HitDirection.ToString()));
-				// to show the impact normal, we draw a debug line
+				if (SourceCharacter && TargetCharacter->IsAlive()) 
+				{
+					FVector HitDirection = (SourceCharacter->GetSprite()->GetForwardVector() * 100) + FVector(0, 0, 300);
+					TargetCharacter->LaunchCharacter(HitDirection, true, true);
+					TargetCharacter->SetIsHurt(true);
+				}
 				if (SourceActor != TargetActor)
 				{
 
