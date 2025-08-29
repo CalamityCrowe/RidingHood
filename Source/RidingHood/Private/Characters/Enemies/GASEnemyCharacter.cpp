@@ -55,13 +55,13 @@ void AGASEnemyCharacter::PossessedBy(AController* NewController)
 void AGASEnemyCharacter::Die()
 {
 	Super::Die();
-
 	// Additional logic for enemy death can be added here
 
 }
 
 void AGASEnemyCharacter::FinishDying()
 {
+	OnDeathDelegate.Broadcast();
 	Super::FinishDying();
 
 	// Additional logic for finishing death can be added here, like dropping loot or notifying a spawner

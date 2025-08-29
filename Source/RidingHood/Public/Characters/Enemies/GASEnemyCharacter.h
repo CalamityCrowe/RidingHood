@@ -10,6 +10,8 @@
 class UWidgetComponent; 
 class UBehaviorTree;
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathDelegate); 
 /**
  * 
  */
@@ -30,6 +32,7 @@ public:
 
 	UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 
+	FOnDeathDelegate OnDeathDelegate;
 
 private: 
 
