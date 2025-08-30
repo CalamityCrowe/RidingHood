@@ -64,7 +64,6 @@ void ABaseSpawner::AddEnemyToQueue(TSubclassOf<AGASEnemyCharacter> EnemyClass)
 	if (OverlappingActors.IsValidIndex(0)) 
 	{
 		SpawnEnemy();
-
 	}
 
 }

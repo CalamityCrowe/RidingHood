@@ -41,6 +41,7 @@ void UStartMenuWidget::NativeConstruct()
 
 	MaxIndex = MenuBox->GetChildrenCount() - 1;
 	CurrentIndex = 0;
+	PlayAnimationForward(StartSelectedAnim);
 
 }
 

@@ -8,6 +8,7 @@
 
 
 class UButton;
+class UVerticalBox;
 /**
  * 
  */
@@ -21,25 +22,58 @@ public:
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 
-	UFUNCTION(BlueprintCallable, Category = "StartMenu")
+	UFUNCTION()
 	void OnStartGameClicked();
-
-	UFUNCTION(BlueprintCallable, Category = "StartMenu")
+	UFUNCTION()
 	void OnOptionsClicked();
-
-	UFUNCTION(BlueprintCallable, Category = "StartMenu")
+	UFUNCTION()
 	void OnExitGameClicked();
+	UFUNCTION()
+	void OnStartHovered();
+	UFUNCTION()
+	void OnOptionsHovered();
+	UFUNCTION()
+	void OnExitHovered();
+
+	UFUNCTION()
+	void OnStartUnhovered();
+	UFUNCTION()
+	void OnOptionsUnhovered();
+	UFUNCTION()
+	void OnExitUnhovered();
+
+
+	UFUNCTION(BlueprintCallable)
+	void MenuSelectionUp();
+	UFUNCTION(BlueprintCallable)
+	void MenuSelectionDown();
+	UFUNCTION(BlueprintCallable)
+	void MenuSelect();
+
 protected:
 	UPROPERTY(meta = (BindWidget))
-	UButton* StartGameButton;
+	TObjectPtr<UButton> StartGameButton;
 
 	UPROPERTY(meta = (BindWidget))
-	UButton* OptionsButton;
+	TObjectPtr<UButton> OptionsButton;
 
 	UPROPERTY(meta = (BindWidget))
-	UButton* ExitGameButton;
+	TObjectPtr<UButton> ExitGameButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* MenuBox;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Level")
 	TSoftObjectPtr<UWorld> LevelToLoad;
 	
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	TObjectPtr<UWidgetAnimation> StartSelectedAnim;
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	TObjectPtr<UWidgetAnimation> OptionsSelectedAnim;
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	TObjectPtr<UWidgetAnimation> ExitSelectedAnim;
+
+	int32 CurrentIndex;
+	int32 MaxIndex;
 };
