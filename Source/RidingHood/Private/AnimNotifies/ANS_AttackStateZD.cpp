@@ -39,7 +39,7 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 	TArray<FHitResult> Hits;
 
 	UKismetSystemLibrary::SphereTraceMultiForObjects(this, Start, Start, CurrentRadius, ObjectTypes, false, IgnoreActors, EDrawDebugTrace::None, Hits, true);
-	//DrawDebugSphere(GetWorld(), Start, CurrentRadius, 12, FColor::Red, false, -1.0f, 0, 1.0f);
+	DrawDebugSphere(GetWorld(), Start, CurrentRadius, 12, FColor::Red, false, -1.0f, 0, 1.0f);
 	if (Hits.Num() > 0)
 	{
 		for (const FHitResult& Hit : Hits)

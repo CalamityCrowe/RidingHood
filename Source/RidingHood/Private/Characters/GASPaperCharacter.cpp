@@ -9,6 +9,7 @@
 #include "PaperFlipbookComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PaperZDAnimationComponent.h"
+#include "Gamefiles/RidingHoodGameMode.h"
 
 
 AGASPaperCharacter::AGASPaperCharacter()
@@ -145,7 +146,8 @@ void AGASPaperCharacter::Tick(float DeltaSeconds)
 	if (Velocity.X != 0)
 	{
 		bool bFacingRight = (Velocity.X > 0);
-		if (bIsHurt) 
+		// print a debug message for the charcter and what way they are facing
+		if (bIsHurt)
 		{
 			bFacingRight = !bFacingRight;
 		}

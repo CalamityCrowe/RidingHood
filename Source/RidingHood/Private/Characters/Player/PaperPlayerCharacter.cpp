@@ -13,6 +13,7 @@
 #include "Player/PaperPlayerState.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include <Gamefiles/RidingHoodGameMode.h>
 
 APaperPlayerCharacter::APaperPlayerCharacter()
 {
@@ -89,6 +90,12 @@ void APaperPlayerCharacter::Die()
 	{
 		PC->RemoveHUD();
 	}
+
+}
+
+void APaperPlayerCharacter::FinishDying()
+{
+	GetWorld()->GetAuthGameMode<ARidingHoodGameMode>()->LoadMainMenu();
 
 }
 

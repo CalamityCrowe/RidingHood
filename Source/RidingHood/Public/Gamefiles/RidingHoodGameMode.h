@@ -34,8 +34,12 @@ public:
 
 	void OnEnemyDefeated();
 
+	void LoadMainMenu();
+
 
 private:
+
+	void InitSpawners();
 
 	TArray<TObjectPtr<ABaseSpawner>> Spawners;
 	int32 WaveNumber; 
@@ -50,6 +54,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AGASEnemyCharacter>> EnemiesToAdd;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	TSoftObjectPtr<UWorld> MainMenuLevel;
 
 	FTimerHandle TransitionTimerHandle;
 };

@@ -52,11 +52,12 @@ void UStartMenuWidget::NativeDestruct()
 
 void UStartMenuWidget::OnStartGameClicked()
 {
-	if (!LevelToLoad.IsValid())
+
+	if (LevelToLoad.IsNull())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("LevelToLoad is not valid!"));
 		return;
-	}
+	}	
 	UGameplayStatics::OpenLevelBySoftObjectPtr(this, LevelToLoad);
 }
 

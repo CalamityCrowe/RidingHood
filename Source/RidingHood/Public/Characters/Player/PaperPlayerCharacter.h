@@ -54,6 +54,7 @@ public:
 	UCameraComponent* GetCamera() const { return Camera; }
 
 	virtual void Die() override;
+	virtual void FinishDying() override;
 
 	bool IsCasting() const { return bIsCasting; }
 	void SetIsCasting(bool bNewIsCasting) { bIsCasting = bNewIsCasting; }

@@ -21,6 +21,7 @@ void UAN_ResetHurt::OnReceiveNotify_Implementation(UPaperZDAnimInstance* OwningI
 			if (Character->GetAbilitySystemComponent())
 			{
 				Character->GetAbilitySystemComponent()->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Stun")));
+				Character->SetIsHurt(false);
 			}
 		}
 	}

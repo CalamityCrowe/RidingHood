@@ -21,6 +21,7 @@ void UAN_ResetAttack::OnReceiveNotify_Implementation(UPaperZDAnimInstance* Ownin
 			if (Character->GetAbilitySystemComponent())
 			{
 				Character->GetAbilitySystemComponent()->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.BlockInput")));
+				Character->GetAbilitySystemComponent()->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Attack")));
 				Character->GetAbilitySystemComponent()->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Attack.Attack1")));
 				Character->GetAbilitySystemComponent()->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Attack.Attack2")));
 			}

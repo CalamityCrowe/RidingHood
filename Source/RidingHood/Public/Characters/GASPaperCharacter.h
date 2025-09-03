@@ -51,6 +51,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter")
 	virtual bool IsAlive() const;
 
+	UFUNCTION(BlueprintPure)
 	bool IsHurt() const { return bIsHurt; }
 	void SetIsHurt(bool bNewIsHurt) { bIsHurt = bNewIsHurt; }
 

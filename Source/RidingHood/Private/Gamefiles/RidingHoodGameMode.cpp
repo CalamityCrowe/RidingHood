@@ -15,8 +15,9 @@ ARidingHoodGameMode::ARidingHoodGameMode()
 void ARidingHoodGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	GetSpawners();
-	NewWave();
+
+	FTimerHandle InitTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(InitTimerHandle, this, &ARidingHoodGameMode::InitSpawners, 1.f, false);
 }
 
 void ARidingHoodGameMode::GetSpawners()
@@ -139,4 +140,20 @@ void ARidingHoodGameMode::OnEnemyDefeated()
 	{
 		Spawners[FMath::RandRange(0, Spawners.Num() - 1)]->AddEnemyToQueue(GetEnemyFromPool());
 	}
+}
+
+void ARidingHoodGameMode::LoadMainMenu()
+{
+	if (MainMenuLevel.IsNull())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("MainMenuLevel is not valid!"));
+		return;
+	}
+	UGameplayStatics::OpenLevelBySoftObjectPtr(this, MainMenuLevel);
+}
+
+void ARidingHoodGameMode::InitSpawners()
+{
+	GetSpawners();
+	NewWave();
 }
