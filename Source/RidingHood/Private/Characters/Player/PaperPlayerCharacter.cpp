@@ -60,6 +60,8 @@ void APaperPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		EIC->BindAction(PlayerInputData->AttackAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::Attack);
 		EIC->BindAction(PlayerInputData->MagicAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::Magic);
 		EIC->BindAction(PlayerInputData->ItemAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::Item);
+		EIC->BindAction(PlayerInputData->NextItemAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::NextItem);
+		EIC->BindAction(PlayerInputData->PreviousItemAction, ETriggerEvent::Started, this, &APaperPlayerCharacter::PreviousItem);
 	}
 }
 

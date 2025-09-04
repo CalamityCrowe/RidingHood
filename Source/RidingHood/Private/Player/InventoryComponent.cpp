@@ -36,7 +36,7 @@ void UInventoryComponent::BeginPlay()
 		}
 		// we grab the list of items to assign to the struct 
 
-		CurrentItem = InventoryItems[ItemsOrder[0]];
+		CurrentItem = &InventoryItems[ItemsOrder[0]];
 
 	}
 	
@@ -62,7 +62,7 @@ void UInventoryComponent::NextItem()
 	FName ItemID = ItemsOrder[CurrentItemIndex];
 	if (FInventorySlot* Slot = InventoryItems.Find(ItemID))
 	{
-		CurrentItem = *Slot;
+		CurrentItem = Slot;
 	}
 }
 
@@ -72,30 +72,29 @@ void UInventoryComponent::PreviousItem()
 	{
 		return;
 	}
-	CurrentItemIndex = (CurrentItemIndex - 1) % ItemsOrder.Num();
+	CurrentItemIndex = (CurrentItemIndex - 1 + ItemsOrder.Num()) % ItemsOrder.Num();
 	FName ItemID = ItemsOrder[CurrentItemIndex];
 	if (FInventorySlot* Slot = InventoryItems.Find(ItemID))
 	{
-		CurrentItem = *Slot;
+		CurrentItem = Slot;
 	}
 }
 
-FItemStruct UInventoryComponent::UseItem()
+FInventorySlot* UInventoryComponent::UseItem()
 {
-	if(CurrentItem.Quantity > 0)
+	if(CurrentItem->Quantity > 0)
 	{
-		CurrentItem.Quantity--; 
-		return CurrentItem.Item; 
+			return CurrentItem;
 	}
-	return FItemStruct(); 
+	return nullptr; 
 }
 
 UTexture2D* UInventoryComponent::GetCurrentItemIcon() const
 {
-	return CurrentItem.Item.Icon;
+	return CurrentItem->Item.Icon;
 }
 
 int32 UInventoryComponent::GetCurrentItemQuantity() const
 {
-	return CurrentItem.Quantity;
+	return CurrentItem->Quantity;
 }

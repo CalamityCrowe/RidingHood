@@ -14,7 +14,7 @@ struct FItemStruct
 	GENERATED_BODY()
 public: 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	FName Name; 
+	FName Name = "Not Set";
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
 	TSubclassOf<UGameplayEffect> ItemEffect;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
@@ -62,9 +62,11 @@ public:
 	void AddItem(FName,int32); 
 	void NextItem(); 
 	void PreviousItem(); 
-	FItemStruct UseItem(); 
+	FInventorySlot* UseItem(); 
 
+	UFUNCTION(BlueprintPure)
 	UTexture2D* GetCurrentItemIcon() const;
+	UFUNCTION(BlueprintPure)
 	int32 GetCurrentItemQuantity() const;
 
 protected: 
@@ -83,6 +85,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UDataTable> ItemDataTable;
 
-	FInventorySlot CurrentItem;
+	FInventorySlot* CurrentItem;
 
 };

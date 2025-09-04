@@ -22,17 +22,22 @@ void UGA_Item::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FG
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	if (APaperPlayerCharacter* Player = Cast<APaperPlayerCharacter>(ActorInfo->AvatarActor))
 	{
-		FItemStruct UsedItem = Player->GetInventoryComponent()->UseItem(); 
-
-		CooldownDuration = UsedItem.Cooldown; 
+		FInventorySlot*  UsedItem = Player->GetInventoryComponent()->UseItem(); 
+		if(!UsedItem)
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+			return;
+		}
+		UsedItem->Quantity--; 
+		CooldownDuration = UsedItem->Item.Cooldown; 
 		if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 		{
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 			return; 
 		}
-		if (UsedItem.ItemEffect) 
+		if (UsedItem->Item.ItemEffect) 
 		{
-			FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(UsedItem.ItemEffect, GetAbilityLevel(Handle, ActorInfo));
+			FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(UsedItem->Item.ItemEffect, GetAbilityLevel(Handle, ActorInfo));
 
 			FGameplayEffectContextHandle EffectContext = SpecHandle.Data.Get()->GetEffectContext();
 			EffectContext.AddSourceObject(Player);
