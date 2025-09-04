@@ -14,6 +14,7 @@ class UGameplayEffect;
 class UGASGameplayAbility;
 class UGASAbilitySystemComponent;
 class UAttributeSetBase;
+
 /**
  * 
  */
@@ -102,6 +103,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Config")
 	TObjectPtr<UCharacterConfig> CharacterConfig;
+
 
 	bool bIsHurt = false;
 

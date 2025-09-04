@@ -46,11 +46,11 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 		{
 			if (Hit.GetActor() && Hit.GetActor() != OwnerCharacter)
 			{
-				if (AGASPaperCharacter* HitCharacter = Cast<AGASPaperCharacter>(Hit.GetActor())) 
+				if (AGASPaperCharacter* HitCharacter = Cast<AGASPaperCharacter>(Hit.GetActor()))
 				{
 					UAbilitySystemComponent* TargetASC = HitCharacter->GetAbilitySystemComponent();
 					UAbilitySystemComponent* SourceASC = OwnerCharacter->GetAbilitySystemComponent();
-					if (TargetASC && SourceASC &&  !TargetASC->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag("State.Stun")))
+					if (TargetASC && SourceASC && !TargetASC->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag("State.Stun")))
 					{
 						// generate a message to show what actor hit what 
 						FGameplayEffectContextHandle EffectContext = SourceASC->MakeEffectContext();
@@ -58,11 +58,12 @@ void UANS_AttackStateZD::OnNotifyTick_Implementation(float DeltaTime, UPaperZDAn
 						EffectContext.AddHitResult(Hit);
 
 						FGameplayEffectSpecHandle DamageSpecHandle = SourceASC->MakeOutgoingSpec(DamageEffect, 1, EffectContext);
-						if (DamageSpecHandle.IsValid()) 
+						if (DamageSpecHandle.IsValid())
 						{
 							DamageSpecHandle.Data->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), CurrentDamage);
 							TargetASC->ApplyGameplayEffectSpecToSelf(*DamageSpecHandle.Data.Get());
 							HitCharacter->StartHitStop(0.1f);
+							HitCharacter->SetIsHurt(true);
 						}
 					}
 

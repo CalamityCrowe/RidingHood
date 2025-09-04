@@ -16,7 +16,7 @@ void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, 
 {
 	Super::PreAttributeChange(Attribute, NewValue);
 
-	if (Attribute == GetMaxHealthAttribute()) 
+	if (Attribute == GetMaxHealthAttribute())
 	{
 		if (NewValue < 0.0f)
 		{
@@ -78,7 +78,7 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 
 	}
-	if (Data.EvaluatedData.Attribute == GetDamageAttribute()) 
+	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
 	{
 		FHitResult HitResult;
 		if (EffectContext.GetHitResult())
@@ -103,12 +103,11 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 			if (TargetCharacter && WasAlive)
 			{
-				if (SourceCharacter && TargetCharacter->IsAlive()) 
+				if (SourceCharacter && TargetCharacter->IsAlive())
 				{
-					FVector HitDirection = (SourceCharacter->GetSprite()->GetForwardVector() * 100) + FVector(0, 0, 30);
+					FVector HitDirection = (SourceCharacter->GetActorLocation() - TargetCharacter->GetActorLocation()).GetSafeNormal() * -200 + FVector(0,0,60);
 					TargetCharacter->GetCharacterMovement()->StopMovementImmediately();
 					TargetCharacter->LaunchCharacter(HitDirection, true, true);
-					TargetCharacter->SetIsHurt(true);
 				}
 				if (SourceActor != TargetActor)
 				{
@@ -117,7 +116,7 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 				if (!TargetCharacter->IsAlive())
 				{
-
+					// for if you are wanting to apply xp onto the player or the chance to restore mana or health on kill
 				}
 			}
 

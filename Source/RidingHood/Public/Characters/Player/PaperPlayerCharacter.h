@@ -12,6 +12,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class UInventoryComponent;
 
 class UInputAction;
 class UInputMappingContext;
@@ -59,6 +60,8 @@ public:
 	bool IsCasting() const { return bIsCasting; }
 	void SetIsCasting(bool bNewIsCasting) { bIsCasting = bNewIsCasting; }
 
+	UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player|Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;
@@ -66,7 +69,8 @@ protected:
 	TObjectPtr<UCameraComponent> Camera;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player|Inputs")
 	TObjectPtr<UPlayerInputData> PlayerInputData;
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UInventoryComponent> InventoryComponent;
 	
 
 	virtual void BeginPlay() override;
@@ -93,5 +97,10 @@ private:
 	UFUNCTION()
 	void Item(const FInputActionValue& Value);
 	
+	UFUNCTION()
+	void NextItem(const FInputActionValue& Value); 
+	UFUNCTION()
+	void PreviousItem(const FInputActionValue& Value);
+
 	virtual void Jump() override;
 };

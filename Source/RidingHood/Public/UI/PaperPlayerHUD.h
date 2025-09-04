@@ -10,6 +10,8 @@ class UAttributeSetBase;
 class UAsyncTaskAttributeChange;
 class UAsyncTaskCooldownChanged;
 class UActionDisplayWidget;
+class UItemDisplayWidget; 
+
 
 
 UCLASS()
@@ -25,6 +27,8 @@ public:
 	virtual void NativeDestruct() override;
 
 	void InitializeHUDWidget(const UAttributeSetBase* Attributes);
+
+	void SetItemWidget(class UTexture2D* ItemIcon, int32 Quantity);
 
 	UFUNCTION()
 	void UpdateHealth(FGameplayAttribute Attribute, float NewValue, float MaxValue);
@@ -52,6 +56,9 @@ protected:
 	UActionDisplayWidget* ItemDisplay;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UActionDisplayWidget* JumpDisplay;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UItemDisplayWidget* ItemWidget;
+
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UTextBlock* CooldownText;
 private: 

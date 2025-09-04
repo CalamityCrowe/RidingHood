@@ -6,6 +6,7 @@
 #include "Characters/Abilities/Tasks/AsyncTaskCooldownChanged.h"
 #include "Player/PaperPlayerState.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "UI/ItemDisplayWidget.h"
 
 
 UPaperPlayerHUD::UPaperPlayerHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -66,6 +67,14 @@ void UPaperPlayerHUD::InitializeHUDWidget(const UAttributeSetBase* Attributes)
 	ManaBar->UpdateBar(Attributes->GetMana());
 
 	// TODO: Initialize Mana Bar similarly
+}
+
+void UPaperPlayerHUD::SetItemWidget(UTexture2D* ItemIcon, int32 Quantity)
+{
+	if (ItemWidget)
+	{
+		ItemWidget->UpdateItemDisplay(ItemIcon, Quantity);
+	}
 }
 
 void UPaperPlayerHUD::UpdateHealth(FGameplayAttribute Attribute, float NewValue, float MaxValue)

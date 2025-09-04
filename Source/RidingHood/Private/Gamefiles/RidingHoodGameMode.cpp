@@ -144,12 +144,12 @@ void ARidingHoodGameMode::OnEnemyDefeated()
 
 void ARidingHoodGameMode::LoadMainMenu()
 {
-	if (MainMenuLevel.IsNull())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("MainMenuLevel is not valid!"));
-		return;
-	}
-	UGameplayStatics::OpenLevelBySoftObjectPtr(this, MainMenuLevel);
+	//if (MainMenuLevel.IsNull())
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("MainMenuLevel is not valid!"));
+	//	return;
+	//}
+	//UGameplayStatics::OpenLevelBySoftObjectPtr(this, MainMenuLevel);
 }
 
 void ARidingHoodGameMode::InitSpawners()

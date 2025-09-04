@@ -140,25 +140,23 @@ void AGASPaperCharacter::BeginPlay()
 void AGASPaperCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-
-
 	FVector Velocity = GetVelocity();
 	if (Velocity.X != 0)
 	{
 		bool bFacingRight = (Velocity.X > 0);
-		// print a debug message for the charcter and what way they are facing
+
 		if (bIsHurt)
 		{
 			bFacingRight = !bFacingRight;
 		}
-		if (bFacingRight) 
+		if (bFacingRight)
 		{
-			GetSprite()->SetRelativeRotation(CharacterConfig->FaceRightRotation);
+			GetSprite()->SetWorldRotation(CharacterConfig->FaceRightRotation);
 			GetSprite()->SetRelativeLocation(CharacterConfig->FaceRightOffset);
 		}
 		else
 		{
-			GetSprite()->SetRelativeRotation(CharacterConfig->FaceLeftRotation);
+			GetSprite()->SetWorldRotation(CharacterConfig->FaceLeftRotation);
 			GetSprite()->SetRelativeLocation(CharacterConfig->FaceLeftOffset);
 		}
 	}

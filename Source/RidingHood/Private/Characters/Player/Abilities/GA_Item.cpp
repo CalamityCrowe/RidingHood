@@ -4,6 +4,8 @@
 #include "Characters/Player/Abilities/GA_Item.h"
 #include "AbilityIDDefine.h"
 #include "Characters/Player/PaperPlayerCharacter.h"
+#include "AbilitySystemComponent.h"
+#include "Player/InventoryComponent.h"
 
 UGA_Item::UGA_Item()
 {
@@ -12,25 +14,35 @@ UGA_Item::UGA_Item()
 	AbilityID = EGASAbilityInputID::Item;
 	AbilityInputID = EGASAbilityInputID::Item;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Item")));
-	
+
 }
 
 void UGA_Item::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
-	if (CommitAbility(Handle, ActorInfo, ActivationInfo))
+	if (APaperPlayerCharacter* Player = Cast<APaperPlayerCharacter>(ActorInfo->AvatarActor))
 	{
-		if (APaperPlayerCharacter* Player = Cast<APaperPlayerCharacter>(ActorInfo->AvatarActor))
+		FItemStruct UsedItem = Player->GetInventoryComponent()->UseItem(); 
+
+		CooldownDuration = UsedItem.Cooldown; 
+		if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 		{
-			//TODO: Use Item
-		//	Player->UseItem();
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Use Item"));
-			//ApplyCooldown(Handle, ActorInfo, ActivationInfo);
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+			return; 
+		}
+		if (UsedItem.ItemEffect) 
+		{
+			FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(UsedItem.ItemEffect, GetAbilityLevel(Handle, ActorInfo));
+
+			FGameplayEffectContextHandle EffectContext = SpecHandle.Data.Get()->GetEffectContext();
+			EffectContext.AddSourceObject(Player);
+			
+			SpecHandle.Data.Get()->SetContext(EffectContext);
+
+			Player->GetAbilitySystemComponent()->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
 		}
 	}
 	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
-
 }
 
 const FGameplayTagContainer* UGA_Item::GetCooldownTags() const
@@ -48,10 +60,10 @@ const FGameplayTagContainer* UGA_Item::GetCooldownTags() const
 void UGA_Item::ApplyCooldown(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
 	UGameplayEffect* CooldownGE = GetCooldownGameplayEffect();
-	if (CooldownGE) 
+	if (CooldownGE)
 	{
 		FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(CooldownGE->GetClass(), GetAbilityLevel(Handle, ActorInfo));
-
+		SpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Cooldown")), CooldownDuration.GetValueAtLevel(GetAbilityLevel(Handle, ActorInfo)));
 		ApplyGameplayEffectSpecToOwner(Handle, ActorInfo, ActivationInfo, SpecHandle);
 	}
 }

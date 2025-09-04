@@ -11,6 +11,7 @@
 
 #include "Player/PaperPlayerController.h"
 #include "Player/PaperPlayerState.h"
+#include "Player/InventoryComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include <Gamefiles/RidingHoodGameMode.h>
@@ -32,6 +33,8 @@ APaperPlayerCharacter::APaperPlayerCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(CameraBoom);
 	Camera->FieldOfView = 80.0f;
+
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventorySystem"));
 
 	
 }
@@ -71,7 +74,7 @@ void APaperPlayerCharacter::PossessedBy(AController* NewController)
 		IntializeAttributes();
 
 		ASC->SetTagMapCount(DeadTag, 0); 
-		SetHealth(GetMaxHealth()); 
+		SetHealth(GetMaxHealth()/2); 
 		SetMana(GetMaxMana());
 
 		AddCharacterAbilities();
@@ -79,6 +82,7 @@ void APaperPlayerCharacter::PossessedBy(AController* NewController)
 		if (APaperPlayerController* PC = Cast<APaperPlayerController>(GetController()))
 		{
 			PC->CreateHUD();
+			
 		}
 	}
 }
@@ -153,4 +157,14 @@ void APaperPlayerCharacter::Jump()
 		return; // Prevent jumping while attacking
 	}
 	Super::Jump();
+}
+
+void APaperPlayerCharacter::NextItem(const FInputActionValue& Value)
+{
+	InventoryComponent->NextItem();
+}
+
+void APaperPlayerCharacter::PreviousItem(const FInputActionValue& Value)
+{
+	InventoryComponent->PreviousItem();
 }

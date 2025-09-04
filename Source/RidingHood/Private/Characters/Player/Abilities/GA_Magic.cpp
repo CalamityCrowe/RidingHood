@@ -39,8 +39,6 @@ void UGA_Magic::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 				EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 				return;
 			}
-			// TODO, if there is a casting animation, set this to true and the animation will reset it
-			//Player->SetIsCasting(true);
 
 			FVector Start = Player->GetSprite()->GetComponentLocation();
 			FVector Forward = Player->GetSprite()->GetForwardVector();
